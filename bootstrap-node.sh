@@ -1,6 +1,11 @@
 #!/bin/sh
 set -ue
 
+# Requires Ubuntu(tested on 18.04 / 20.04)
+
+RED='\033[1;31m'    # Ligt red
+NC='\033[0m'        # No Color
+
 password() {
     openssl rand -base64 24
 }
@@ -23,11 +28,14 @@ chmod +x $docker_compose_path
 
 # set root password
 root_passwd=$(password)
-echo "Root password: $root_passwd" && echo "root:$root_passwd" | chpasswd  # ubuntu only
+echo "Root password: ${RED}$root_passwd${NC}" && echo "root:$root_passwd" | chpasswd  # ubuntu only
 
 # Create sudoer admin
 admin_user="watcher"
 admin_user_ssh_dir="/home/$admin_user/.ssh/"
+admin_passwd=$(password)
+echo "$admin_user password: ${RED}$admin_passwd{$NC}" && echo "$admin_user:$admin_passwd" | chpasswd  # ubuntu only
+
 adduser --gecos "" --disabled-password $admin_user && usermod -aG sudo $admin_user
 mkdir $admin_user_ssh_dir && cp ~/.ssh/authorized_keys $admin_user_ssh_dir && chown -R $admin_user:$admin_user $admin_user_ssh_dir
 
@@ -41,3 +49,6 @@ sed s'/#PasswordAuthentication yes/PasswordAuthentication no/g' -i $sshd_config
 sed s'/PermitRootLogin yes/PermitRootLogin no/g' -i $sshd_config
 
 echo "Checkout https://drewdevault.com/new-server.html"
+
+echo "Carefully check $sshd_config and then run"
+echo "reboot"
