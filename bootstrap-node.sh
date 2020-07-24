@@ -28,15 +28,14 @@ chmod +x $docker_compose_path
 
 # set root password
 root_passwd=$(password)
-echo "Root password: ${RED}$root_passwd${NC}" && echo "root:$root_passwd" | chpasswd  # ubuntu only
+echo "root password: ${RED}$root_passwd${NC}" && echo "root:$root_passwd" | chpasswd  # ubuntu only
 
 # Create sudoer admin
 admin_user="watcher"
 admin_user_ssh_dir="/home/$admin_user/.ssh/"
 admin_passwd=$(password)
-echo "$admin_user password: ${RED}$admin_passwd{$NC}" && echo "$admin_user:$admin_passwd" | chpasswd  # ubuntu only
-
 adduser --gecos "" --disabled-password $admin_user && usermod -aG sudo $admin_user
+echo "$admin_user password: ${RED}$admin_passwd${NC}" && echo "$admin_user:$admin_passwd" | chpasswd  # ubuntu only
 mkdir $admin_user_ssh_dir && cp ~/.ssh/authorized_keys $admin_user_ssh_dir && chown -R $admin_user:$admin_user $admin_user_ssh_dir
 
 # tweak ssh accesses
