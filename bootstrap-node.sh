@@ -9,7 +9,7 @@ function password {
 apt-get -y update && 
     apt-get -y install  \
         fail2ban        \
-        nvim            \
+        neovim          \
         git             \
         screen          \
         docker.io       \
