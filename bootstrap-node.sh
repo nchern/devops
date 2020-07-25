@@ -31,6 +31,7 @@ curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compo
 chmod +x $docker_compose_path
 
 echo "Generating key pair for user root:" && cat /dev/zero | ssh-keygen -q -N "" -t rsa
+echo ""
 
 # set root password
 root_passwd=$(password)
@@ -42,6 +43,7 @@ admin_user_ssh_dir="/home/$admin_user/.ssh/"
 adduser --gecos "" --disabled-password $admin_user && usermod -aG sudo $admin_user
 # Generate key pair for admin user
 echo "Generating key pair for user $admin_user:" &&  cat /dev/zero | sudo -u $admin_user ssh-keygen -q -N "" -t rsa
+echo ""
 
 admin_passwd=$(password)
 echo "$admin_user password: ${RED}$admin_passwd${NC}" && echo "$admin_user:$admin_passwd" | chpasswd  # ubuntu only
