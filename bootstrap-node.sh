@@ -1,6 +1,10 @@
 #!/bin/sh
 set -ue
 
+# Credits to Drew DeVault(https://drewdevault.com/)
+# Inspired by and created after his https://drewdevault.com/new-server.html
+
+
 # Requires Ubuntu(tested on 18.04 / 20.04)
 
 RED='\033[1;31m'    # Ligt red
