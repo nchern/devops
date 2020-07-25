@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# put the command to restart your web server here
+# e.g. nginx -s reload

@@ -1,0 +1,15 @@
+#!/bin/sh -eu
+exec >>/var/log/acme.log 2>&1
+date
+
+acme() {
+	site=$1
+	shift
+	/usr/bin/uacme -v -h /usr/share/uacme/uacme.sh issue $site $* || true
+}
+
+DOMAIN="DOMAIN"
+
+acme $DOMAIN
+
+/usr/local/bin/web-server-restart
