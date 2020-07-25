@@ -30,6 +30,8 @@ docker_compose_path="/usr/local/bin/docker-compose"
 curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o $docker_compose_path
 chmod +x $docker_compose_path
 
+echo "Generating key pair for user root:" && ssh-keygen -t rsa  # TODO make this non-interactivr
+
 # set root password
 root_passwd=$(password)
 echo "root password: ${RED}$root_passwd${NC}" && echo "root:$root_passwd" | chpasswd  # ubuntu only
@@ -37,10 +39,13 @@ echo "root password: ${RED}$root_passwd${NC}" && echo "root:$root_passwd" | chpa
 # Create sudoer admin
 admin_user="watcher"
 admin_user_ssh_dir="/home/$admin_user/.ssh/"
-admin_passwd=$(password)
 adduser --gecos "" --disabled-password $admin_user && usermod -aG sudo $admin_user
+# Generate key pair for admin user
+echo "Generating key pair for user $admin_user:" && sudo -u $admin_user ssh-keygen -t rsa  # TODO make this non-interactivr
+
+admin_passwd=$(password)
 echo "$admin_user password: ${RED}$admin_passwd${NC}" && echo "$admin_user:$admin_passwd" | chpasswd  # ubuntu only
-mkdir $admin_user_ssh_dir && cp ~/.ssh/authorized_keys $admin_user_ssh_dir && chown -R $admin_user:$admin_user $admin_user_ssh_dir
+cp ~/.ssh/authorized_keys $admin_user_ssh_dir && chown -R $admin_user:$admin_user $admin_user_ssh_dir && chmod 0600 "$admin_user_ssh_dir/authorized_keys"
 
 # tweak ssh accesses
 sshd_config="/etc/ssh/sshd_config"

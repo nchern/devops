@@ -11,6 +11,4 @@ done
 
 cp acme-update-certs /usr/local/bin/acme-update-certs
 
-cp web-server-restart /usr/local/bin/
-
 ./init-acme.sh
