@@ -8,8 +8,8 @@ acme() {
 	/usr/bin/uacme -v -h /usr/share/uacme/uacme.sh issue $site $* || true
 }
 
-DOMAIN="DOMAIN"
+domain="DOMAIN"
 
-acme $DOMAIN
+acme $domain
 
-/usr/local/bin/web-server-restart
+# TODO: perform appropriate restart: /usr/local/bin/web-server-restart

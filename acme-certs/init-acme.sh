@@ -24,4 +24,11 @@ cp acme-update-certs /usr/local/bin/acme-update-certs
 # TODO: let acme resrt web server
 # doas usermod -aG acme nginx
 
+# Register this node as acme client(email is optional)
 sudo -u acme uacme new $CERT_EMAIL
+
+# MANUAL
+vim web-server-restart
+cp web-server-restart /usr/local/bin/
+
+chmod "u+s" /usr/local/bin/web-server-restart
