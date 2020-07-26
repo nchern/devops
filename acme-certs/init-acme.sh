@@ -19,8 +19,6 @@ touch /var/log/acme.log
 
 chown acme:acme /var/log/acme.log
 
-cp acme-update-certs /usr/local/bin/acme-update-certs
-
 # TODO: let acme resrt web server
 # doas usermod -aG acme nginx
 
