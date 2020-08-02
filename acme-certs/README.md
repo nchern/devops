@@ -15,6 +15,13 @@ They are based on `uacme` client that talks to https://letsencrypt.org/ by defau
 ## Usage
 
 ```bash
+$ git clone https://github.com/nchern/devops.git
+$ cd acme-certs
+
+# prepare dirs / users
+$ init.sh
+# get initial cerst and schedules updates via cron
+$ get-cert-schedule-updates.sh
 
 # after running you've got cert and key files:
 # /etc/ssl/uacme/<your-domain>/cert.pem
