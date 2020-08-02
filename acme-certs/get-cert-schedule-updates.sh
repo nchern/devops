@@ -28,7 +28,6 @@ cat /var/log/acme.log # verify success
 [ -f /etc/ssl/uacme/$DOMAIN/cert.pem ]        || echo "cert.pem is MISSING!"
 [ -f /etc/ssl/uacme/private/$DOMAIN/key.pem ] || echo "key.pem is MISSING!"
 
-# TODO: mangle with nginx
 docker rm -f $CHALLENGE_CONTAINER
 
 chmod -R g+rX /etc/ssl/uacme /etc/ssl/uacme/private
