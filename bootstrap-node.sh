@@ -24,6 +24,7 @@ apt-get -y update &&
         docker.io       \
         make            \
         htop            \
+        ssmtp           \
         openssl
 
 docker_compose_path="/usr/local/bin/docker-compose"
