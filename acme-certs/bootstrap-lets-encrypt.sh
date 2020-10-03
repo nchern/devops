@@ -11,4 +11,4 @@ done
 
 cp acme-update-certs /usr/local/bin/acme-update-certs
 
-./init-acme.sh
+./init.sh

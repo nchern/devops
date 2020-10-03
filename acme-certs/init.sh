@@ -1,7 +1,8 @@
 #!/bin/sh
 set -ue
 
-CERT_EMAIL=""  # optional email to register certs with
+echo -n "Enter optoinal email to register certs with and press [ENTER]: "
+read CERT_EMAIL  # optional email to register certs with
 
 apt-get install -y uacme moreutils
 
