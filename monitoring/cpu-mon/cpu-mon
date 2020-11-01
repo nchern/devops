@@ -1,0 +1,21 @@
+#!/bin/sh
+set -ue
+
+TAG="cpu-mon"
+
+REFRESH_RATE="5s"
+
+PROCESS_COUNT=10
+
+LOG_FILE="/tmp/$TAG.$$.log"
+
+
+
+while true
+do
+	top -n1 -b | fgrep -A $PROCESS_COUNT 'PID USER' | fgrep -v 'PID USER' > $LOG_FILE
+
+	logger -t $TAG -f $LOG_FILE
+
+	sleep $REFRESH_RATE
+done

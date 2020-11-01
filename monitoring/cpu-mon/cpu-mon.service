@@ -1,0 +1,13 @@
+[Unit]
+Description=CPU Monitor
+After=network.target
+
+[Service]
+User=daemon
+Group=daemon
+Type=simple
+Restart=on-failure
+ExecStart=/usr/local/bin/cpu-mon
+
+[Install]
+WantedBy=multi-user.target
