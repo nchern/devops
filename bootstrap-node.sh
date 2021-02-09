@@ -20,7 +20,7 @@ apt-get -y update &&
         fail2ban        \
         neovim          \
         git             \
-        screen          \
+        tmux            \
         docker.io       \
         make            \
         htop            \
