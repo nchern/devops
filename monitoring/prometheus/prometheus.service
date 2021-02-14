@@ -1,0 +1,11 @@
+[Unit]
+Description=Prometheus
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/usr/local/bin/prometheus.sh
+
+[Install]
+WantedBy=multi-user.target
