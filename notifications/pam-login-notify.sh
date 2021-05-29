@@ -4,6 +4,19 @@
 # It relies on preconfigured local MTA
 # Source: http://askubuntu.com/questions/179889/how-do-i-set-up-an-email-alert-when-a-ssh-login-is-successful
 
+
+SILENT_INTERVAL_SEC=60  # do not send notification if subsequent accesses happened within this time interval
+
+NOW=$(date +'%s')
+LAST_ACCESSED_FILE="/home/$PAM_USER/.last_ssh_accessed"
+
+LAST_ACCESSED=$(cat "$LAST_ACCESSED_FILE" 2> /dev/null || echo 0)
+
+if [ $((NOW-LAST_ACCESSED)) -le "$SILENT_INTERVAL_SEC" ]; then
+    exit 0
+fi
+
+
 TO="%EMAIL%"
 
 HOST=$(hostname)
@@ -11,7 +24,7 @@ HOST=$(hostname)
 KNOWN_REMOTES_FILE="/home/$PAM_USER/.known_remotes"
 
 if [ "$PAM_TYPE" != "close_session" ]; then
-    if [ -f "$KNOWN_REMOTES_FILE" ] && grep -q "$PAM_RHOST" $KNOWN_REMOTES_FILE ; then
+    if [ -f "$KNOWN_REMOTES_FILE" ] && grep -q "$PAM_RHOST" "$KNOWN_REMOTES_FILE" ; then
         # if we know this remote, don't send anything
     	exit 0
     fi
@@ -20,4 +33,6 @@ if [ "$PAM_TYPE" != "close_session" ]; then
     MESSAGE="Successful login using $PAM_SERVICE"
 
     echo "$MESSAGE" | mail -s "$SUBJECT" $TO
+
+    echo "$NOW" > "$LAST_ACCESSED_FILE"
 fi
