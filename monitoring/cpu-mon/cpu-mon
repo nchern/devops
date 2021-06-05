@@ -13,7 +13,7 @@ LOG_FILE="/tmp/$TAG.$$.log"
 
 while true
 do
-	top -n1 -b | fgrep -A $PROCESS_COUNT 'PID USER' | fgrep -v 'PID USER' > $LOG_FILE
+	top -n1 -b -c -w 1024 | fgrep -A $PROCESS_COUNT 'PID USER' | fgrep -v 'PID USER' | head -n "$PROCESS_COUNT" > $LOG_FILE
 
 	logger -t $TAG -f $LOG_FILE
 
