@@ -5,7 +5,7 @@ set -ue
 VER="v2.22.0"
 PROM_VOLUME="prom_local"
 
-docker run -ti \
+exec docker run -ti --rm \
 	--network="host" \
 	--name="prometheus" \
 	-v "$PROM_VOLUME":/prometheus \
