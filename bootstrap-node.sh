@@ -26,6 +26,7 @@ apt-get -y update &&
         htop            \
         ssmtp           \
         net-tools       \
+        moreutils       \
         openssl
 
 docker_compose_path="/usr/local/bin/docker-compose"
