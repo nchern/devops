@@ -7,11 +7,11 @@
 
 SILENT_INTERVAL_SEC=60  # do not send notification if subsequent accesses happened within this time interval
 
-NOW=$(date +'%s')
 LAST_ACCESSED_FILE="/home/$PAM_USER/.last_ssh_accessed"
 
-LAST_ACCESSED=$(cat "$LAST_ACCESSED_FILE" 2> /dev/null || echo 0)
+LAST_ACCESSED=$(stat -c %Y "$LAST_ACCESSED_FILE" 2> /dev/null || echo 0)
 
+NOW=$(date +'%s')
 if [ $((NOW-LAST_ACCESSED)) -le "$SILENT_INTERVAL_SEC" ]; then
     exit 0
 fi
@@ -34,5 +34,5 @@ if [ "$PAM_TYPE" != "close_session" ]; then
 
     echo "$MESSAGE" | mail -s "$SUBJECT" $TO
 
-    echo "$NOW" > "$LAST_ACCESSED_FILE"
+    touch "$LAST_ACCESSED_FILE"
 fi
