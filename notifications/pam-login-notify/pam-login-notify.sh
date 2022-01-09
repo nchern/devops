@@ -1,9 +1,12 @@
 #!/bin/sh
+set -ue
 
 # This script should be called by PAM to notify about ssh logins to the system
 # It relies on preconfigured local MTA
 # Source: http://askubuntu.com/questions/179889/how-do-i-set-up-an-email-alert-when-a-ssh-login-is-successful
 
+
+TO="${PAM_LOGIN_NOTIFY_TO:-"%EMAIL%"}"
 
 SILENT_INTERVAL_SEC=60  # do not send notification if subsequent accesses happened within this time interval
 
@@ -16,8 +19,6 @@ if [ $((NOW-LAST_ACCESSED)) -le "$SILENT_INTERVAL_SEC" ]; then
     exit 0
 fi
 
-
-TO="%EMAIL%"
 
 HOST=$(hostname)
 
