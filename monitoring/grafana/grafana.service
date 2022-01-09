@@ -1,0 +1,13 @@
+[Unit]
+Description=Local Grafana server
+After=network.target
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=on-failure
+ExecStart=/usr/local/bin/grafana.sh
+
+[Install]
+WantedBy=multi-user.target
