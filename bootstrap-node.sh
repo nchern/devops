@@ -58,7 +58,7 @@ echo "$admin_user password: ${RED}$admin_passwd${NC}"
 
 # tweak ssh accesses
 sshd_config="/etc/ssh/sshd_config"
-cp  $sshd_config $sshd_config.original
+cp $sshd_config $sshd_config.original
 
 sed s'/#PermitEmpty/PermitEmpty/g' -i.orig $sshd_config
 sed s'/#PasswordAuthentication yes/PasswordAuthentication no/g' -i $sshd_config
