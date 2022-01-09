@@ -32,7 +32,7 @@ if [ "$PAM_TYPE" != "close_session" ]; then
     SUBJECT="SSH Login[$HOST]: $PAM_USER from $PAM_RHOST"
     MESSAGE="Successful login using $PAM_SERVICE"
 
-    echo "$MESSAGE" | mail -s "$SUBJECT" $TO
+    echo "$MESSAGE" | mail -s "$SUBJECT" "$TO"
 
     touch "$LAST_ACCESSED_FILE"
 fi
