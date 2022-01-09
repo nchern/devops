@@ -5,7 +5,7 @@ install:
 	@mkdir -p /etc/prometheus/
 	@install -m 0644 prometheus.yml /etc/prometheus/
 	@install prometheus.sh /usr/local/bin/
-	@./prometheus.sh init
+	@prometheus.sh init
 
 
 .PHONY: install-systemd
