@@ -1,6 +1,8 @@
 [Unit]
 Description=Prometheus
 After=network.target
+After=docker.service
+Requires=docker.service
 
 [Service]
 Type=simple
