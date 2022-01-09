@@ -10,7 +10,7 @@ tar_file = $(pkg).tar.gz
 
 .PHONY: user
 user:
-	@useradd -rs /bin/false node_exporter || true 
+	@useradd -rs /bin/false node_exporter || true
 
 
 node_exporter:
