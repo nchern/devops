@@ -8,7 +8,7 @@ user:
 .PHONY: install
 install: user
 	@install grafana.sh /usr/local/bin/
-	@./grafana.sh init
+	@grafana.sh init
 
 
 .PHONY: install-systemd
