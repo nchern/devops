@@ -27,11 +27,13 @@ scrape_configs:
 
     static_configs:
     - targets: ['localhost:9090']
+      labels:
+        host: 'HOSTNAME'
 
   - job_name: 'node_exporter_metrics'
     scrape_interval: 5s
     static_configs:
     - targets: ['127.0.0.1:9100']
       labels:
-        host: 'netbrain'
+        host: 'HOSTNAME'
 

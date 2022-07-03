@@ -19,7 +19,7 @@ case "${1:-}" in
 		;;
 esac
 
-exec docker run -ti --rm \
+exec docker run -t --rm \
 	--network="host" \
 	--name="prometheus" \
 	-v "$VOLUME:/prometheus" \
