@@ -5,7 +5,13 @@ set -ue
 # Inspired by and created after his https://drewdevault.com/new-server.html
 
 
-# Requires Ubuntu(tested on 18.04 / 20.04)
+# Requires at least Debian-like
+# Tested on Ubuntu(18.04 / 20.04)
+if ! grep -q 'ID_LIKE=debian' /etc/os-release; then
+    echo "The system does not look like Debian and the likes. Halt."
+    grep --with-filename -E '(NAME|ID)' /etc/os-release
+    exit 1
+fi
 
 RED='\033[1;31m'    # Ligt red
 NC='\033[0m'        # No Color
