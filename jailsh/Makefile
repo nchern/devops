@@ -1,9 +1,11 @@
 IMAGE_NAME=jailsh
+EDITOR ?= vi
 
 
 .PHONY: container-image
 container-image:
 	$(EDITOR) users.conf
+	./gen_add_users.sh
 	docker build -t $(IMAGE_NAME) .
 
 .PHONY: install

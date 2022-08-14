@@ -1,7 +1,8 @@
 # Jailsh - sandboxed shell
 
 
-The main use case - ssh into a container on the host system to provide better isolation of remote users.
+The main use case - a user connects to a server via ssh and gets a sandboxed shell in a container
+on the host system to provide better isolation.
 Jailsh gives a possibility to map a directory from the host into a container as a home dir.
 
 ## Installation
@@ -18,10 +19,18 @@ make all
 ### 2. Set up users and their ssh options
 This is a manual step.
 
+#### Setup sudo
+
 The user in question should be able to run `jailsh` as a sudoer.
+This is a minimum sudoers configuration:
+```
+<jailed-user> <Host>= NOPASSWD:SETENV: /usr/local/bin/jailsh
+```
+It is important that `sudo jailsh` should be run without a password and be able to preserve env vars.
+
 In this example it is assumed that `$HOME/sandbox` exists for this user and it will be its home dir in a sandbox.
 
-There are two options: tweak `sshd_config` or configure an individual public key in user's `authorized_keys`.
+There are two options how to hook into ssh: tweak `sshd_config` or configure an individual public key in user's `authorized_keys`.
 
 #### Tweak sshd_config
 
