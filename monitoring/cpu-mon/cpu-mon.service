@@ -9,5 +9,9 @@ Type=simple
 Restart=on-failure
 ExecStart=/usr/local/bin/cpu-mon
 
+# Customise
+# Environment="REFRESH_RATE=5s"
+# Environment="PROCESS_COUNT=10"
+
 [Install]
 WantedBy=multi-user.target

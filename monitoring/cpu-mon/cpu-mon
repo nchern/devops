@@ -3,23 +3,17 @@ set -ue
 
 TAG="cpu-mon"
 
-REFRESH_RATE="5s"
+TOP_WIDTH_MAX=512
 
-PROCESS_COUNT=10
+REFRESH_RATE=${REFRESH_RATE:-5s}
+PROCESS_COUNT=${PROCESS_COUNT:-10}
 
-LOG_FILE="/tmp/$TAG.$$.log"
-
-# ensure log file exists and belongs only to the user of this service
-touch $LOG_FILE && chmod 600 $LOG_FILE
-
-while true
-do
-	top -n1 -b -c -w 1024 |
-        grep -F -A $PROCESS_COUNT 'PID USER' |
+while true ; do
+	top -n1 -b -c -w "$TOP_WIDTH_MAX" |
+        grep -F -A "$PROCESS_COUNT" 'PID USER' |
         grep -F -v 'PID USER' |
-        head -n "$PROCESS_COUNT" > $LOG_FILE
+        head -n "$PROCESS_COUNT" |
+        logger -t $TAG -e
 
-	logger -t $TAG -f $LOG_FILE
-
-	sleep $REFRESH_RATE
+	sleep "$REFRESH_RATE"
 done
