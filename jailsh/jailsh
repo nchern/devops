@@ -4,31 +4,33 @@ set -ue
 # Help: provides sandboxed environment - runs shell in a container and maps user home in it.
 # Usage: jailsh </path/to/home-in-jail>
 
+
 IMAGE="jailsh"
 JAIL_CMD="/bin/sh "
 
 APP_NAME=$(basename "$0")
+alias log='logger --id=$$ -t "$APP_NAME"'
 
 # if this script is run from sudo we need to get the original user
 TARGET_USER=${SUDO_USER:-"$USER"}
 TARGET_HOME="/home/$TARGET_USER"
-
 JAIL_HOME=${1:-$TARGET_HOME}
 
-echo "starting for user $TARGET_USER cmd: $*" | logger --id=$$ -t "$APP_NAME"
+log "starting for user $TARGET_USER args: $*"
 
 TTY="-t"
-if [ -n "${SSH_ORIGINAL_COMMAND:-}" ]
-then
+if [ -n "${SSH_ORIGINAL_COMMAND:-}" ] ; then
     TTY=""  # ssh command passed, non-interactive mode
     JAIL_CMD="$SSH_ORIGINAL_COMMAND"
 fi
 
+log "TTY=$TTY JAIL_CMD=$JAIL_CMD"
+
 # shellcheck disable=SC2086 # here we intend multi-param expansion
-exec docker run -i --rm $TTY \
-    -h "$(hostname)" \
-    -e "HOME=$TARGET_HOME" \
-    -w "$TARGET_HOME" \
+exec docker run -i --rm $TTY    \
+    -h "$(hostname)"            \
+    -e "HOME=$TARGET_HOME"      \
+    -w "$TARGET_HOME"           \
     -v "$JAIL_HOME:$TARGET_HOME" \
     --user "$(id -u "$TARGET_USER"):$(id -g "$TARGET_USER")" \
     "$IMAGE" $JAIL_CMD
